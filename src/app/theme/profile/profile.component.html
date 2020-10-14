@@ -1,0 +1,18 @@
+<h3>My Profile</h3>
+<div *ngIf="!isReady">{{ loadingMessage }}</div>
+<div *ngIf="isReady">
+  <div>
+    <b>Username: </b>
+    {{ user.username }}
+  </div>
+  <div>
+    <b>Full Name: </b>
+    {{ user.firstname }} {{ user.lastname }}
+  </div>
+  <div>
+    <b>Email: </b>
+    {{ user.email || 'Not Provided!' }}
+  </div>
+  <br>
+  <button (click)="onEditProfile()">Edit Profile</button>
+</div>

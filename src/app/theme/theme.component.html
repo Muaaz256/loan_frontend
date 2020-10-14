@@ -1,0 +1,16 @@
+<div *ngIf="!isReady && !logoutError">
+  {{ loadingMessage }}
+</div>
+<div *ngIf="isReady && logoutError" style="color: red">
+  Some unexpected error occurred. Please, load the <a routerLink="/">Home</a> page.
+</div>
+<div *ngIf="isReady && !logoutError">
+  <hr>
+  <h3>Welcome, {{ user.firstname }}  {{ user.lastname }}!</h3>
+  <a routerLink="/user/dashboard" style="margin-right: 20px">Dashboard</a>
+  <a routerLink="/user/loaners" style="margin-right: 20px">Loaners</a>
+  <a routerLink="/user/profile" style="margin-right: 20px">My Profile</a>
+  <button (click)="logout()">Logout</button>
+  <hr>
+  <router-outlet></router-outlet>
+</div>

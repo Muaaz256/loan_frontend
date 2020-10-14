@@ -1,0 +1,24 @@
+<h3>Login</h3>
+<div *ngIf="!isReady">
+  {{ loadingMessage }}
+</div>
+<div *ngIf="isReady">
+  <i>Fields with <span class="text-red">*</span> are required.</i>
+  <br> <br>
+  <form [formGroup]="loginFormGroup" autocomplete="off">
+    <label for="username">Username: <span class="text-red">*</span></label>
+    <input type="text" id="username" formControlName="username">
+    <br> <br>
+    <label for="password">Password: <span class="text-red">*</span></label>
+    <input type="password" id="password" formControlName="password">
+    <br> <br>
+    <div *ngIf="errorMessage">
+      <b>Errors: </b>
+      <span class="text-red"> {{ errorMessage }}</span>
+      <br> <br>
+    </div>
+    <button (click)="handleLogin()">Login</button>
+    <hr>
+  </form>
+  Don't have an account? <a routerLink="/register">Signup</a>
+</div>

@@ -1,0 +1,27 @@
+<h3>Edit Profile</h3>
+<div *ngIf="!isReady"> {{ loadingMessage }}</div>
+<div *ngIf="isReady">
+  <i>Fields with <span class="text-red">*</span> are required.</i>
+  <br> <br>
+  <form [formGroup]="editProfileFormGroup" autocomplete="off">
+    <label for="username">Username: <span class="text-red">*</span></label>
+    <input type="text" id="username" formControlName="username">
+    <br> <br>
+    <label for="firstname">First Name: <span class="text-red">*</span></label>
+    <input type="text" id="firstname" formControlName="firstname">
+    <br> <br>
+    <label for="lastname">Last Name: <span class="text-red">*</span></label>
+    <input type="text" id="lastname" formControlName="lastname">
+    <br> <br>
+    <label for="email">Email: </label>
+    <input type="email" id="email" formControlName="email">
+    <br> <br>
+    <div *ngIf="errorMessage">
+      <span class="text-red"> {{ errorMessage }}</span>
+      <br> <br>
+    </div>
+    <button (click)="handleEditProfile()">Submit</button> |
+    <button (click)="cancelEdit()">Cancel</button>
+    <br> <br>
+  </form>
+</div>
