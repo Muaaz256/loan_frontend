@@ -1,7 +1,7 @@
 import {Component, OnDestroy} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SubSink} from 'subsink';
-import {AuthService} from '../services';
+import {AuthService} from '../../services';
 
 @Component({
   selector: 'app-signup',

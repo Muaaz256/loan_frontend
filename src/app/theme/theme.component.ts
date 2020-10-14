@@ -41,7 +41,7 @@ export class ThemeComponent implements OnInit, OnDestroy {
       () => {
         this.isReady = true;
         this.logoutError = false;
-        this.router.navigate(['/login']);
+        this.router.navigate(['/accounts/login']);
       },
       () => {
         this.logoutError = true;

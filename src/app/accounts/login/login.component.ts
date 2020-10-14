@@ -1,6 +1,6 @@
 import {Component, OnDestroy} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
-import {AuthService} from '../services';
+import {AuthService} from '../../services';
 import {Router} from '@angular/router';
 import {SubSink} from 'subsink';
 

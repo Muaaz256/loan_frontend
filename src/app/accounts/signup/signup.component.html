@@ -38,10 +38,10 @@
     <button (click)="handleRegister()">Register</button>
     <hr>
   </form>
-  Already have an account? <a routerLink="/login">Login</a>
+  Already have an account? <a routerLink="/accounts/login">Login</a>
 </div>
 <div *ngIf="isReady && registerSuccess">
   Registered Successfully!
   <br> <br>
-  <a routerLink="/login">Login</a>
+  <a routerLink="/accounts/login">Login</a>
 </div>
