@@ -5,11 +5,11 @@
   Some unexpected error occurred. Please, load the <a routerLink="/">Home</a> page.
 </div>
 <div *ngIf="isReady && !logoutError">
-  <hr>
   <h3>Welcome, {{ user.firstname }}  {{ user.lastname }}!</h3>
-  <a routerLink="/user/dashboard" style="margin-right: 20px">Dashboard</a>
-  <a routerLink="/user/loaners" style="margin-right: 20px">Loaners</a>
-  <a routerLink="/user/profile" style="margin-right: 20px">My Profile</a>
+  <a routerLink="dashboard" style="margin-right: 20px">Dashboard</a>
+  <a routerLink="loaners" style="margin-right: 20px">Loaners</a>
+  <a routerLink="profile" style="margin-right: 20px">My Profile</a>
+  <a routerLink="security/change-password" style="margin-right: 20px">Security</a>
   <button (click)="logout()">Logout</button>
   <hr>
   <router-outlet></router-outlet>

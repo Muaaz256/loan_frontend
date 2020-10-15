@@ -2,6 +2,7 @@ import {Component, OnDestroy} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SubSink} from 'subsink';
 import {AuthService} from '../../services';
+import {showOrHidePassword} from '../../shared/utils';
 
 @Component({
   selector: 'app-signup',
@@ -25,13 +26,10 @@ export class SignupComponent implements OnDestroy {
 
   registerSuccess = false;
 
-  PASSWORD_TYPES = {
-    PASSWORD: 'password',
-    CONFIRM_PASSWORD: 'confirm-password'
-  };
-
   passwordFieldShown = false;
   confirmPasswordFieldShown = false;
+
+  showPasswordsHandler = showOrHidePassword;
 
   private subs = new SubSink();
 
@@ -66,17 +64,6 @@ export class SignupComponent implements OnDestroy {
       this.errorMessage = 'You have missed some required field.';
       this.isReady = true;
     }
-  }
-
-  showOrHidePassword(passwordType, fieldId): void {
-    let showValue: boolean;
-    if (passwordType === this.PASSWORD_TYPES.PASSWORD) {
-      showValue = this.passwordFieldShown = !this.passwordFieldShown;
-    } else {
-      showValue = this.confirmPasswordFieldShown = !this.confirmPasswordFieldShown;
-    }
-    const elem = document.getElementById(fieldId);
-    elem.setAttribute('type', showValue ? 'text' : 'password');
   }
 
   ngOnDestroy(): void {

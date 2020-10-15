@@ -4,10 +4,11 @@ import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [NotFoundComponent],
-  imports: [RouterModule.forChild([
-    {path: '', component: NotFoundComponent}
-  ])],
-  exports: [NotFoundComponent]
+  imports: [
+    RouterModule.forChild([
+      {path: '', component: NotFoundComponent}
+    ])
+  ],
 })
 export class NotFoundModule {
 }

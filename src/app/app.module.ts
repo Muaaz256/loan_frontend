@@ -3,11 +3,9 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AppRoutingModule} from './app-routing.module';
-import {ThemeModule} from './theme/theme.module';
-import {AccountsModule} from './accounts/accounts.module';
-import {NotFoundModule} from './not-found/not-found.module';
+import {GeneralHttpInterceptorService} from './services/general-http-interceptor.service';
 
 
 @NgModule({
@@ -20,7 +18,13 @@ import {NotFoundModule} from './not-found/not-found.module';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: GeneralHttpInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

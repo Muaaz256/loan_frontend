@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable, of, Subject, throwError} from 'rxjs';
-import {UserFormInterface, UserInterface} from '../../interfaces';
+import {UserFormInterface, UserInterface} from '../interfaces';
 import {catchError, map} from 'rxjs/operators';
 import {User} from '../models';
 
@@ -9,7 +9,6 @@ import {User} from '../models';
   providedIn: 'root'
 })
 export class AuthService {
-  endPointDomain = 'http://localhost:8000';
   user: User;
   userUpdated = new Subject<User>();
 
@@ -25,7 +24,7 @@ export class AuthService {
       email: user.email
     };
     return this.http.post<UserInterface>(
-      `${this.endPointDomain}/users/register/`, userBody
+      'users/register/', userBody
     ).pipe(catchError(errors => {
       const responseError = errors.error;
       if (responseError.username) {
@@ -37,7 +36,7 @@ export class AuthService {
 
   login(username: string, password: string): Observable<{ token: string; user: UserInterface }> {
     return this.http.post<{ token: string; user: UserInterface }>(
-      `${this.endPointDomain}/auth/login/`, {username, password}
+      'auth/login/', {username, password}
     ).pipe(
       map(response => {
         const userData = response.user;
@@ -62,13 +61,7 @@ export class AuthService {
 
   logout(): Observable<null> {
     return this.http.post<null>(
-      `${this.endPointDomain}/auth/logout/`,
-      null,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('auth_token')}`
-        }
-      }
+      'auth/logout/', null
     ).pipe(map((response) => {
       localStorage.removeItem('auth_token');
       return response;
@@ -79,14 +72,7 @@ export class AuthService {
     if (!!this.user) {
       return of(this.user);
     }
-    return this.http.get<UserInterface>(
-      `${this.endPointDomain}/users/me/`,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('auth_token')}`
-        }
-      }
-    ).pipe<User>(map(res => {
+    return this.http.get<UserInterface>('users/me/').pipe<User>(map(res => {
       this.user = {
         id: res.id,
         username: res.username,
@@ -106,13 +92,7 @@ export class AuthService {
       email: user.email
     };
     return this.http.patch<UserInterface>(
-      `${this.endPointDomain}/users/edit_me/`,
-      userBody,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('auth_token')}`
-        }
-      }
+      'users/edit_me/', userBody
     ).pipe(map(response => {
       this.user = {
         id: response.id,
@@ -130,5 +110,33 @@ export class AuthService {
       }
       return throwError('Unknown error occurred.');
     }));
+  }
+
+  changePassword(passwordValues: {
+    currentPassword: string; newPassword: string
+  }): Observable<null> {
+    const changePasswordBody: {
+      current_password: string;
+      new_password: string
+    } = {
+      current_password: passwordValues.currentPassword,
+      new_password: passwordValues.newPassword
+    };
+    return this.http.put<null>(
+      'auth/change_password/',
+      changePasswordBody
+    ).pipe(catchError(errors => {
+      const responseError = errors.error;
+      if (responseError.current_password) {
+        return throwError(responseError.current_password[0]);
+      }
+      return throwError('Unknown error occurred.');
+    }));
+  }
+
+  deleteMyAccount(): Observable<null> {
+    return this.http.delete<null>(
+      'users/delete_me/'
+    );
   }
 }

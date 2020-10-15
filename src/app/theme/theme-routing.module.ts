@@ -20,6 +20,10 @@ const routes: Routes = [
           {path: '', component: ProfileComponent},
           {path: 'edit', component: EditProfileComponent}
         ],
+      },
+      {
+        path: 'security',
+        loadChildren: () => import('./security/security.module').then(m => m.SecurityModule)
       }
     ]
   }

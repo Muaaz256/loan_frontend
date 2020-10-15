@@ -1,0 +1,14 @@
+<div style="padding: 10px">
+  <h3>Delete Account</h3>
+  <div *ngIf="!isReady">
+    {{ loadingMessage }}
+  </div>
+  <div *ngIf="isReady" style="width: 70%; text-align: center; border: 1px black solid; padding: 10px">
+    Deleting your account will delete all the data associated with it.
+    You cannot recover your account once you have deleted it.
+    <br>
+    <button class="danger-btn" (click)="deleteAccountHandler()">
+      Yes I understand it. Delete anyways!
+    </button>
+  </div>
+</div>

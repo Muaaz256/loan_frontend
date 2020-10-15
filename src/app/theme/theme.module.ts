@@ -17,14 +17,7 @@ import {ThemeRoutingModule} from './theme-routing.module';
     ProfileComponent,
     EditProfileComponent,
   ],
-  imports: [RouterModule, ReactiveFormsModule, CommonModule, ThemeRoutingModule],
-  exports: [
-    ThemeComponent,
-    DashboardComponent,
-    LoanersComponent,
-    ProfileComponent,
-    EditProfileComponent,
-  ]
+  imports: [ReactiveFormsModule, CommonModule, ThemeRoutingModule]
 })
 export class ThemeModule {
 }

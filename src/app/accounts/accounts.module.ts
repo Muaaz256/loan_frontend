@@ -6,19 +6,16 @@ import {RouterModule} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {AccountsRoutingModule} from './accounts-routing.module';
+import {ErrorPageComponent} from './error-page/error-page.component';
 
 @NgModule({
   declarations: [
     AccountsComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    ErrorPageComponent
   ],
-  imports: [RouterModule, ReactiveFormsModule, CommonModule, AccountsRoutingModule],
-  exports: [
-    AccountsComponent,
-    SignupComponent,
-    LoginComponent
-  ]
+  imports: [ReactiveFormsModule, CommonModule, AccountsRoutingModule]
 })
 export class AccountsModule {
 }

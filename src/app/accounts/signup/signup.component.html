@@ -20,13 +20,13 @@
     <br> <br>
     <label for="password">Password: <span class="text-red">*</span></label>
     <input type="password" id="password" formControlName="password">
-    <button (click)="showOrHidePassword(PASSWORD_TYPES.PASSWORD, 'password')">
+    <button (click)="showPasswordsHandler(this, 'passwordFieldShown', 'password')">
       {{ passwordFieldShown ? 'Hide' : 'Show' }} Password
     </button>
     <br> <br>
     <label for="confirmPassword">Re-enter Password: <span class="text-red">*</span></label>
     <input type="password" id="confirmPassword" formControlName="confirmPassword">
-    <button (click)="showOrHidePassword(PASSWORD_TYPES.CONFIRM_PASSWORD, 'confirmPassword')">
+    <button (click)="showPasswordsHandler(this, 'confirmPasswordFieldShown', 'confirmPassword')">
       {{ confirmPasswordFieldShown ? 'Hide' : 'Show' }} Password
     </button>
     <br> <br>

@@ -3,6 +3,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {AuthService} from '../../services';
 import {Router} from '@angular/router';
 import {SubSink} from 'subsink';
+import {showOrHidePassword} from '../../shared/utils';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,9 @@ export class LoginComponent implements OnDestroy {
 
   isReady = true;
   loadingMessage = 'Loading...';
+
+  passwordShown = false;
+  showPasswordHandler = showOrHidePassword;
 
   private subs = new SubSink();
 

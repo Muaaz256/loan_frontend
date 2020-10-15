@@ -11,6 +11,9 @@
     <br> <br>
     <label for="password">Password: <span class="text-red">*</span></label>
     <input type="password" id="password" formControlName="password">
+    <button (click)="showPasswordHandler(this, 'passwordShown', 'password')">
+      {{ passwordShown ? 'Hide' : 'Show' }} Password
+    </button>
     <br> <br>
     <div *ngIf="errorMessage">
       <b>Errors: </b>
