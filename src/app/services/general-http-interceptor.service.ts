@@ -28,7 +28,7 @@ export class GeneralHttpInterceptorService implements HttpInterceptor {
     const newReq = req.clone(newProperties);
     return next.handle(newReq).pipe(
       catchError(errors => {
-          if (errors.status === 403) {
+          if ([403, 0, 500].includes(errors.status)) {
             localStorage.removeItem('auth_token');
             this.router.navigate(['/accounts/error-page']);
           }

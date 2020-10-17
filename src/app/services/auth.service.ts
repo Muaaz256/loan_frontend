@@ -139,4 +139,49 @@ export class AuthService {
       'users/delete_me/'
     );
   }
+
+  verifyUsername(username: string): Observable<{ email: string | null }> {
+    return this.http.get<{ email: string | null }>(
+      'auth/verify_username/',
+      {
+        params: {username}
+      }
+    ).pipe(catchError(errors => {
+      const responseError = errors.error;
+      if (responseError.errors) {
+        return throwError(responseError.errors[0]);
+      }
+      return throwError('Unknown error occurred.');
+    }));
+  }
+
+  sendLinkToMail(username: string, email: string): Observable<null> {
+    return this.http.post<null>(
+      'auth/send_link/',
+      {
+        username, email
+      }
+    );
+  }
+
+  verifyLinkToken(linkToken: string): Observable<null> {
+    return this.http.get<null>(
+      'auth/verify_reset_password_link/',
+      {
+        params: {
+          link_token: linkToken
+        }
+      }
+    );
+  }
+
+  resetPassword(linkToken: string, newPassword: string): Observable<null> {
+    return this.http.put<null>(
+      'auth/reset_password/',
+      {
+        link_token: linkToken,
+        new_password: newPassword
+      }
+    );
+  }
 }
