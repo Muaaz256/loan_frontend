@@ -1,0 +1,23 @@
+<div *ngIf="!isReady">
+  {{ loadingMessage }}
+</div>
+<div *ngIf="isReady">
+  <h3>{{ loaner.name }}</h3>
+  <b>Name: </b>
+  {{ loaner.name }}
+  <br>
+  <b>Email: </b>
+  {{ loaner.email || 'Not Provided.' }}
+  <br>
+  <b>Phone: </b>
+  {{ loaner.phone}}
+  <br>
+  <b>Address: </b>
+  {{ loaner.address || 'Not Provided.' }}
+  <br> <br>
+  <button [routerLink]="['../../edit', loaner.id]">Edit Loaner</button>
+  |
+  <button routerLink="../../">Go Back to List</button>
+  |
+  <button (click)="onDeleteLoaner()">Delete</button>
+</div>

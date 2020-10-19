@@ -1,0 +1,37 @@
+<h4>{{ title }}</h4>
+<div *ngIf="!isReady">
+  {{ loadingMessage }}
+</div>
+<div *ngIf="isReady && !processSuccess">
+  Fields with <span style="color: red">*</span> are required.
+  <br> <br>
+  <form [formGroup]="loanerFormGroup" autocomplete="off">
+    <label for="name">Name: <span style="color: red">*</span></label>
+    <input type="text" id="name" formControlName="name" autocomplete="off">
+    <br> <br>
+    <label for="email">Email: </label>
+    <input type="email" id="email" formControlName="email" autocomplete="off">
+    <br> <br>
+    <label for="phone">Phone: <span style="color: red">*</span></label>
+    <input type="text" id="phone" formControlName="phone" autocomplete="off">
+    <br> <br>
+    <label for="address">Address: </label>
+    <textarea type="text" id="address" formControlName="address" autocomplete="off"></textarea>
+    <br> <br>
+    <div *ngIf="errorMessage">
+      <b>Error: </b>
+      <span style="color: red">
+        {{ errorMessage }}
+      </span>
+      <br>
+    </div>
+    <button (click)="onAddOrEditLoaner()">{{ !this.loanerId ? 'Add' : 'Edit' }} Loaner</button>
+    |
+    <button (click)="goBackToList()">Cancel</button>
+  </form>
+</div>
+<div *ngIf="isReady && processSuccess">
+  The loaner has been successfully {{ !this.loanerId ? 'added' : 'edited'}}. <br>
+  <button (click)="goBackToList()">OK</button>
+</div>
+

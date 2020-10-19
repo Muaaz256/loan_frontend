@@ -1,0 +1,33 @@
+<div class="header">
+  <h4>Loaners List</h4>
+  <button routerLink="add">Add New Loaner</button>
+</div>
+<div *ngIf="!isReady">
+  {{ loadingMessage }}
+</div>
+<div *ngIf="isReady && errors">
+  <div style="color: red">Some unknown error occurred.</div>
+  Visit <a routerLink="/">Home Page</a>.
+</div>
+<div *ngIf="isReady && !errors">
+  <table *ngIf="loaners.length > 0">
+    <tr>
+      <th>Sr. No.</th>
+      <th>Name</th>
+      <th>Phone</th>
+      <th>Actions</th>
+    </tr>
+    <tr *ngFor="let loaner of loaners; let i = index">
+      <td> {{ i + 1 }} </td>
+      <td> {{ loaner.name }} </td>
+      <td> {{ loaner.phone }} </td>
+      <td>
+        <button [routerLink]="['detail', loaner.id]">View Detail</button>
+        <button [routerLink]="['edit', loaner.id]" style="margin-left: 5px">Edit</button>
+        <button style="margin-left: 5px">View Loans Details</button>
+        <button (click)="onDeleteLoaner(loaner)" style="margin-left: 5px">Delete</button>
+      </td>
+    </tr>
+  </table>
+  <p *ngIf="loaners.length == 0">No loaner in record!</p>
+</div>
