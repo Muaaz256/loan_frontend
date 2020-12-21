@@ -65,7 +65,7 @@ export class ForgotPasswordComponent implements OnDestroy {
             this.currentPhase = this.PROCESS_PHASES.SUCCESS;
             this.errorMessage = null;
             this.isReady = true;
-          }, errors => {
+          }, () => {
             this.currentPhase = this.PROCESS_PHASES.ERROR;
             this.errorMessage = null;
             this.isReady = true;

@@ -44,7 +44,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.linkValid = true;
         this.isReady = true;
-      }, errors => {
+      }, () => {
         this.router.navigate(['/notfound']);
       });
   }
@@ -66,7 +66,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
               this.errorMessage = null;
               this.isReady = true;
             },
-            errors => {
+            () => {
               this.resetPasswordFailed = true;
               this.isReady = true;
             }

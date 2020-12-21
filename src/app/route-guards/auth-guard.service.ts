@@ -16,9 +16,9 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot, state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
     if (localStorage.getItem('auth_token')) {
-      return this.authService.me().pipe(map((response) => {
+      return this.authService.me().pipe(map(() => {
         return true;
-      }), catchError((errors) => {
+      }), catchError(() => {
         localStorage.removeItem('auth_token');
         this.router.navigate(['/accounts/login']);
         return throwError(false);
