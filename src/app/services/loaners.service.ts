@@ -14,9 +14,16 @@ export class LoanersService {
   constructor(private http: HttpClient) {
   }
 
-  getAllLoaners(): Observable<Loaner []> {
-    return this.http.get<Loaner []>(this.END_POINT).pipe(
-      catchError(errors => {
+  getAllLoaners(searchParam: string): Observable<Loaner []> {
+    return this.http.get<Loaner []>(
+      this.END_POINT,
+      {
+        params: {
+          search: searchParam
+        }
+      }
+    ).pipe(
+      catchError(() => {
         return throwError('Error Occurred');
       })
     );
@@ -28,7 +35,7 @@ export class LoanersService {
       request = this.http.patch<Loaner>(`${this.END_POINT}${loaner.id}/`, loaner);
     }
     return request.pipe(
-      catchError(errors => {
+      catchError(() => {
         return throwError('An unknown error occurred.');
       })
     );
@@ -36,7 +43,7 @@ export class LoanersService {
 
   getLoanerDetails(loanerId: number): Observable<Loaner> {
     return this.http.get<Loaner>(`${this.END_POINT}${loanerId}/`).pipe(
-      catchError(errors => {
+      catchError(() => {
         return throwError('An unknown error occurred.');
       })
     );
@@ -44,7 +51,7 @@ export class LoanersService {
 
   deleteLoaner(loanerId: number): Observable<null> {
     return this.http.delete<null>(`${this.END_POINT}${loanerId}/`).pipe(
-      catchError(errors => {
+      catchError(() => {
         return throwError('An unknown error occurred.');
       })
     );

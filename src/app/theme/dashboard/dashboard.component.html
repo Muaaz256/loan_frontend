@@ -1,1 +1,39 @@
 <h3>Dashboard</h3>
+<div *ngIf="!isReady">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+  {{ loadingMessage }}
+</div>
+<div *ngIf="isReady && errors">
+  <div style="color: red">Some unknown error occurred.</div>
+  Visit
+  <span style="color: blue;text-decoration: underline;cursor: pointer" (click)="loadDashboard()">
+    Reload Dashboard</span>.
+</div>
+<div *ngIf="isReady && !errors">
+  <h4>Total Payable Amount: {{ dashboard.totalPayable }}</h4>
+  <h4>Total Paid Amount: {{ dashboard.totalPaid }}</h4>
+  <h4 *ngIf="dashboard.paymentsDifference > 0">
+    You have to pay a loan of Rs. {{ dashboard.paymentsDifference }}.
+  </h4>
+  <h4 *ngIf="dashboard.paymentsDifference < 0">
+    You have to receive Rs. {{ -dashboard.paymentsDifference }}.
+  </h4>
+  <h4 *ngIf="dashboard.paymentsDifference === 0">
+    Your received and paid amounts are equal.
+  </h4>
+  <h4>Pinned Payments</h4>
+  <ol *ngIf="dashboard.pinnedPayments.length > 0">
+    <li *ngFor="let payment of dashboard.pinnedPayments">
+      You have {{ payment.type === paymentTypes.PAID ? 'paid' : 'received' }}
+      Rs. {{ payment.paymentAmount }} {{ payment.type === paymentTypes.PAID ? 'to' : 'from' }}
+      {{ payment.paymentLoaner }} on date {{ payment.paymentDate | date }}.
+      <button (click)="unPinPaymentFromDashboard(payment.id)">Unpin From Dashboard</button>
+    </li>
+  </ol>
+  <div *ngIf="dashboard.pinnedPayments.length === 0">
+    No pinned payment!
+  </div>
+
+</div>

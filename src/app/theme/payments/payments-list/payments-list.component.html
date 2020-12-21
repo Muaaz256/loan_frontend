@@ -1,0 +1,126 @@
+<div class="header">
+  <h4> {{ directVisitor?.name }}{{ directVisitor?.name ? '\'s' : '' }} Payments List</h4>
+  <button (click)="onAddOrEditPayment(null)">Add New Payment</button>
+</div>
+<div *ngIf="!isReady">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+  {{ loadingMessage }}
+</div>
+<div *ngIf="isReady && errors">
+  <div style="color: red">Some unknown error occurred.</div>
+  Visit <a routerLink="/">Home Page</a>.
+</div>
+<div *ngIf="isReady && !errors" class="search-bar">
+  <input
+    *ngIf="!directVisitor"
+    type="search"
+    placeholder="Search (Name)"
+    autocomplete="off"
+    style="margin: 0 5px"
+    [(ngModel)]="searchParams.loanerName.value"
+    (ngModelChange)="onFilter()"
+  >
+  <span style="margin: 0 5px; display: flex; flex-direction: row">
+    Payment Date:
+    <select
+      style="max-width: 80px"
+      [(ngModel)]="searchParams.paymentDate.lookup"
+      (ngModelChange)="onFilter()"
+    >
+      <option
+        *ngFor="let filterOption of dateFilterOptions"
+        [value]="filterOption.value"
+        [selected]="searchParams.paymentDate.lookup === filterOption.value"
+      >
+        {{ filterOption.label }}
+      </option>
+    </select>
+    <input
+      type="date"
+      autocomplete="off"
+      [(ngModel)]="searchParams.paymentDate.value"
+      (ngModelChange)="onFilter()"
+    >
+  </span>
+  <span style="margin: 0 5px; display: flex; flex-direction: row">
+    Payment Amount:
+    <select
+      style="max-width: 80px"
+      [(ngModel)]="searchParams.paymentAmount.lookup"
+      (ngModelChange)="onFilter()"
+    >
+      <option
+        *ngFor="let filterOption of numberFilterOptions"
+        [value]="filterOption.value"
+        [selected]="searchParams.paymentAmount.lookup === filterOption.value"
+      >
+        {{ filterOption.label }}
+      </option>
+    </select>
+    <input
+      type="number"
+      autocomplete="off"
+      style="width: 100px"
+      [(ngModel)]="searchParams.paymentAmount.value"
+      (ngModelChange)="onFilter()"
+    >
+  </span>
+  <span style="margin: 0 5px; display: flex; flex-direction: row">
+    Payment Type:
+    <select
+      [(ngModel)]="searchParams.paymentType.value"
+      (ngModelChange)="onFilter()"
+    >
+      <option
+        *ngFor="let filterOption of paymentTypesOptions"
+        [value]="filterOption.value"
+        [selected]="searchParams.paymentType.lookup === filterOption.value"
+      >
+        {{ filterOption.label }}
+      </option>
+    </select>
+  </span>
+</div>
+<br>
+<div *ngIf="isReady && !errors && payments.length > 0">
+  <span
+    *ngIf="searchParams.paymentType.value === paymentTypes.ALL ||
+    searchParams.paymentType.value === paymentTypes.RECEIVED"
+  >
+    <b>Total Payable Amount: </b> Rs. {{ totalPayable || 0 }}
+  </span>
+  <span
+    *ngIf="searchParams.paymentType.value === paymentTypes.ALL ||
+    searchParams.paymentType.value === paymentTypes.PAID"
+  >
+    <b>Total Paid Amount: </b> Rs. {{ totalPaid || 0 }}
+  </span>
+  <br> <br>
+  <table>
+    <tr>
+      <th>Sr. No.</th>
+      <th *ngIf="!directVisitor">Loaner Name</th>
+      <th>Payment Date</th>
+      <th>Payment Amount (PKR)</th>
+      <th>Payment Type</th>
+      <th>Action</th>
+    </tr>
+    <tr *ngFor="let payment of payments; let i = index">
+      <td> {{ i + 1 }} </td>
+      <td *ngIf="!directVisitor"> {{ payment.loaner.name }} </td>
+      <td> {{ payment.paymentDate | date }} </td>
+      <td> {{ payment.paymentAmount }} </td>
+      <td> {{ payment.paymentType === paymentTypes.PAID ? 'Paid' : 'Received' }} </td>
+      <td>
+        <button style="margin-left: 5px" (click)="onAddOrEditPayment(payment.id)">Edit</button>
+        <button style="margin-left: 5px" (click)="onDeletePayment(payment.id)">Delete</button>
+        <button style="margin-left: 5px" (click)="pinPaymentToDashboard(payment.id)">
+          {{ payment.isPinned ? 'Unpin from': 'Pin to' }} Dashboard
+        </button>
+      </td>
+    </tr>
+  </table>
+</div>
+<p *ngIf="isReady && !errors && payments.length == 0">No payment in record!</p>

@@ -1,5 +1,8 @@
 <h4>{{ title }}</h4>
 <div *ngIf="!isReady">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
   {{ loadingMessage }}
 </div>
 <div *ngIf="isReady && !processSuccess">
@@ -25,13 +28,12 @@
       </span>
       <br>
     </div>
-    <button (click)="onAddOrEditLoaner()">{{ !this.loanerId ? 'Add' : 'Edit' }} Loaner</button>
+    <button (click)="onAddOrEditLoaner()">{{ !loanerId ? 'Add' : 'Edit' }} Loaner</button>
     |
     <button (click)="goBackToList()">Cancel</button>
   </form>
 </div>
 <div *ngIf="isReady && processSuccess">
-  The loaner has been successfully {{ !this.loanerId ? 'added' : 'edited'}}. <br>
+  The loaner has been successfully {{ !loanerId ? 'added' : 'edited'}}. <br>
   <button (click)="goBackToList()">OK</button>
 </div>
-

@@ -3,6 +3,8 @@ import {Loaner} from '../../../models/loaner.model';
 import {SubSink} from 'subsink';
 import {LoanersService} from '../../../services/loaners.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import * as cryptoJS from 'crypto-js';
+import {CIPHER_KEY} from '../../../shared/constants';
 
 @Component({
   selector: 'app-loaners-list',
@@ -16,7 +18,10 @@ export class LoanersListComponent implements OnInit, OnDestroy {
   isReady = true;
   loadingMessage = 'Loading All Loaners...';
 
+  searchParam = '';
+
   errors = false;
+
 
   private subs = new SubSink();
 
@@ -25,19 +30,21 @@ export class LoanersListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.loadLoaners();
+    this.loadLoaners('');
   }
 
-  loadLoaners(): void {
-    this.isReady = false;
-    this.loadingMessage = 'Loading All Loaners...';
-    this.subs.sink = this.loanersService.getAllLoaners().subscribe(
+  loadLoaners(searchParam: string, reload = true): void {
+    if (reload) {
+      this.isReady = false;
+      this.loadingMessage = 'Loading All Loaners...';
+    }
+    this.subs.sink = this.loanersService.getAllLoaners(searchParam).subscribe(
       response => {
         this.loaners = response;
         this.errors = false;
         this.isReady = true;
       },
-      errors => {
+      () => {
         this.errors = true;
         this.isReady = true;
       }
@@ -47,21 +54,33 @@ export class LoanersListComponent implements OnInit, OnDestroy {
   onDeleteLoaner(loaner: Loaner): void {
     const deleteFlag = confirm(`Are you sure that you want to delete the loaner ${loaner.name}?`);
     if (deleteFlag) {
-      this.loadingMessage = `Deleting the Loaner ${loaner.name}`;
-      this.loanersService.deleteLoaner(loaner.id).subscribe(
+      this.subs.sink = this.loanersService.deleteLoaner(loaner.id).subscribe(
         () => {
           alert('The loaner has been deleted successfully.');
-          this.loadLoaners();
+          this.loadLoaners(this.searchParam, false);
         },
-        errors => {
+        () => {
           alert('An unknown error occurred while deleting the loaner.');
         }
       );
     }
   }
 
+  onSearch(event): void {
+    this.loadLoaners(this.searchParam, false);
+  }
+
+  onViewPayments(loaner: Loaner): void {
+    const encrypted = cryptoJS.AES.encrypt(
+      `${loaner.id }`, CIPHER_KEY
+    ).toString();
+    this.router.navigate(
+      ['../../payments'],
+      {relativeTo: this.activatedRoute, queryParams: {loaner: encrypted}}
+    );
+  }
+
   ngOnDestroy(): void {
     this.subs.unsubscribe();
   }
-
 }

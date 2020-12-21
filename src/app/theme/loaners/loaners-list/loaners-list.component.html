@@ -3,14 +3,29 @@
   <button routerLink="add">Add New Loaner</button>
 </div>
 <div *ngIf="!isReady">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
   {{ loadingMessage }}
 </div>
 <div *ngIf="isReady && errors">
   <div style="color: red">Some unknown error occurred.</div>
   Visit <a routerLink="/">Home Page</a>.
 </div>
-<div *ngIf="isReady && !errors">
-  <table *ngIf="loaners.length > 0">
+<div *ngIf="isReady && !errors"
+     style="display: flex; flex-direction: row-reverse; width: 80%;"
+>
+  <input
+    type="search"
+    [(ngModel)]="searchParam"
+    (ngModelChange)="onSearch($event)"
+    placeholder="Search (Name)"
+    autocomplete="off"
+  >
+</div>
+<br>
+<div *ngIf="isReady && !errors && loaners.length > 0">
+  <table>
     <tr>
       <th>Sr. No.</th>
       <th>Name</th>
@@ -24,10 +39,10 @@
       <td>
         <button [routerLink]="['detail', loaner.id]">View Detail</button>
         <button [routerLink]="['edit', loaner.id]" style="margin-left: 5px">Edit</button>
-        <button style="margin-left: 5px">View Loans Details</button>
+        <button style="margin-left: 5px" (click)="onViewPayments(loaner)">View Payments</button>
         <button (click)="onDeleteLoaner(loaner)" style="margin-left: 5px">Delete</button>
       </td>
     </tr>
   </table>
-  <p *ngIf="loaners.length == 0">No loaner in record!</p>
 </div>
+<p *ngIf="isReady && !errors && loaners.length == 0">No loaner in record!</p>

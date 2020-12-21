@@ -1,4 +1,7 @@
 <div *ngIf="!isReady && !logoutError">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
   {{ loadingMessage }}
 </div>
 <div *ngIf="isReady && logoutError" style="color: red">
@@ -8,6 +11,7 @@
   <h3>Welcome, {{ user.firstname }}  {{ user.lastname }}!</h3>
   <a routerLink="dashboard" style="margin-right: 20px">Dashboard</a>
   <a routerLink="loaners" style="margin-right: 20px">Loaners</a>
+  <a routerLink="payments" style="margin-right: 20px">Payments</a>
   <a routerLink="profile" style="margin-right: 20px">My Profile</a>
   <a routerLink="security/change-password" style="margin-right: 20px">Security</a>
   <button (click)="logout()">Logout</button>

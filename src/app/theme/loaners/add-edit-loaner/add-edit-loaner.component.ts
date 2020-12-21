@@ -48,7 +48,7 @@ export class AddEditLoanerComponent implements OnInit, OnDestroy {
           this.errorMessage = null;
           this.isReady = true;
         },
-        errors => {
+        () => {
           this.router.navigate(['/notfound']);
         }
       );
@@ -70,7 +70,7 @@ export class AddEditLoanerComponent implements OnInit, OnDestroy {
 
   onAddOrEditLoaner(): void {
     this.isReady = false;
-    this.loadingMessage = `${!this.loanerId ? 'Add' : 'Edit'} the Loaner...`;
+    this.loadingMessage = `${!this.loanerId ? 'Adding' : 'Editing'} the Loaner...`;
     if (this.loanerFormGroup.valid) {
       const loanerBody: Loaner = {
         ...this.loanerFormGroup.value,

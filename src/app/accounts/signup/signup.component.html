@@ -1,47 +1,58 @@
-<h3>Signup</h3>
-<div *ngIf="!isReady && !registerSuccess">
-  {{ loadingMessage }}
-</div>
-<div *ngIf="isReady && !registerSuccess">
-  <i>Fields with <span class="text-red">*</span> are required.</i>
-  <br> <br>
-  <form [formGroup]="registerFormGroup" autocomplete="off">
-    <label for="username">Username: <span class="text-red">*</span></label>
-    <input type="text" id="username" formControlName="username">
-    <br> <br>
-    <label for="firstname">First Name: <span class="text-red">*</span></label>
-    <input type="text" id="firstname" formControlName="firstname">
-    <br> <br>
-    <label for="lastname">Last Name: <span class="text-red">*</span></label>
-    <input type="text" id="lastname" formControlName="lastname">
-    <br> <br>
-    <label for="email">Email: </label>
-    <input type="email" id="email" formControlName="email">
-    <br> <br>
-    <label for="password">Password: <span class="text-red">*</span></label>
-    <input type="password" id="password" formControlName="password">
-    <button (click)="showPasswordsHandler(this, 'passwordFieldShown', 'password')">
-      {{ passwordFieldShown ? 'Hide' : 'Show' }} Password
-    </button>
-    <br> <br>
-    <label for="confirmPassword">Re-enter Password: <span class="text-red">*</span></label>
-    <input type="password" id="confirmPassword" formControlName="confirmPassword">
-    <button (click)="showPasswordsHandler(this, 'confirmPasswordFieldShown', 'confirmPassword')">
-      {{ confirmPasswordFieldShown ? 'Hide' : 'Show' }} Password
-    </button>
-    <br> <br>
-    <div *ngIf="errorMessage">
-      <b>Errors: </b>
-      <span class="text-red"> {{ errorMessage }}</span>
-      <br> <br>
+<app-accounts-container>
+  <h3>Signup</h3>
+  <div *ngIf="!isReady">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
     </div>
-    <button (click)="handleRegister()">Register</button>
-    <hr>
-  </form>
-  Already have an account? <a routerLink="/accounts/login">Login</a>
-</div>
-<div *ngIf="isReady && registerSuccess">
-  Registered Successfully!
-  <br> <br>
-  <a routerLink="/accounts/login">Login</a>
-</div>
+    {{ loadingMessage }}
+  </div>
+  <div *ngIf="isReady && !registerSuccess">
+    <i>Fields with <span class="text-red">*</span> are required.</i>
+    <br> <br>
+    <form [formGroup]="registerFormGroup" autocomplete="off">
+      <label for="username">Username: <span class="text-red">*</span></label>
+      <input type="text" id="username" formControlName="username">
+      <br> <br>
+      <label for="firstname">First Name: <span class="text-red">*</span></label>
+      <input type="text" id="firstname" formControlName="firstname">
+      <br> <br>
+      <label for="lastname">Last Name: <span class="text-red">*</span></label>
+      <input type="text" id="lastname" formControlName="lastname">
+      <br> <br>
+      <label for="email">Email: </label>
+      <input type="email" id="email" formControlName="email">
+      <br> <br>
+      <label for="password">Password: <span class="text-red">*</span></label>
+      <input type="password" id="password" formControlName="password">
+      <button
+        class="btn btn-sm btn-dark"
+        (click)="showPasswordsHandler(this, 'passwordFieldShown', 'password')"
+      >
+        {{ passwordFieldShown ? 'Hide' : 'Show' }} Password
+      </button>
+      <br> <br>
+      <label for="confirmPassword">Re-enter Password: <span class="text-red">*</span></label>
+      <input type="password" id="confirmPassword" formControlName="confirmPassword">
+      <button
+        class="btn btn-sm btn-dark"
+        (click)="showPasswordsHandler(this, 'confirmPasswordFieldShown', 'confirmPassword')"
+      >
+        {{ confirmPasswordFieldShown ? 'Hide' : 'Show' }} Password
+      </button>
+      <br> <br>
+      <div *ngIf="errorMessage">
+        <b>Errors: </b>
+        <span class="text-red"> {{ errorMessage }}</span>
+        <br> <br>
+      </div>
+      <button class="btn btn-primary" (click)="handleRegister()">Register</button>
+      <hr>
+    </form>
+    Already have an account? <a routerLink="/accounts/login">Login</a>
+  </div>
+  <div *ngIf="isReady && registerSuccess">
+    Registered Successfully!
+    <br> <br>
+    <a routerLink="/accounts/login">Login</a>
+  </div>
+</app-accounts-container>

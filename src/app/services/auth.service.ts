@@ -47,6 +47,7 @@ export class AuthService {
           lastname: userData.last_name,
           email: userData.email
         };
+        console.log('Hello');
         localStorage.setItem('auth_token', response.token);
         return response;
       }),

@@ -31,7 +31,7 @@ export class LoanerDetailComponent implements OnInit, OnDestroy {
         this.loaner = response;
         this.isReady = true;
       },
-      errors => {
+      () => {
         this.router.navigate(['/notfound']);
       }
     );
@@ -40,12 +40,12 @@ export class LoanerDetailComponent implements OnInit, OnDestroy {
   onDeleteLoaner(): void {
     const deleteFlag = confirm(`Are you sure that you want to delete the loaner ${this.loaner.name}?`);
     if (deleteFlag) {
-      this.loanersService.deleteLoaner(this.loaner.id).subscribe(
+      this.subs.sink = this.loanersService.deleteLoaner(this.loaner.id).subscribe(
         () => {
           alert('The loaner has been deleted successfully.');
           this.router.navigate(['../../'], {relativeTo: this.activatedRoute});
         },
-        errors => {
+        () => {
           alert('An unknown error occurred while deleting the loaner.');
         }
       );

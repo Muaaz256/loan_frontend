@@ -1,0 +1,64 @@
+<h4>{{ title }} <span *ngIf="directVisitor"> for {{ directVisitor.name }}</span></h4>
+<div *ngIf="!isReady">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+  {{ loadingMessage }}
+</div>
+<div *ngIf="isReady && !processSuccess">
+  Fields with <span style="color: red">*</span> are required.
+  <br> <br>
+  <form [formGroup]="paymentFormGroup" autocomplete="off">
+    <label for="payment-date">Payment Date: <span style="color: red">*</span></label>
+    <input type="date" id="payment-date" formControlName="paymentDate" autocomplete="off">
+    <br> <br>
+    <label for="payment-amount">Payment Amount: <span style="color: red">*</span></label>
+    <input type="number" id="payment-amount" formControlName="paymentAmount" autocomplete="off">
+    <br> <br>
+    <span *ngIf="!directVisitor">
+      <label for="payment-loaner">Loaner: <span style="color: red">*</span></label>
+      <select
+        *ngIf="loanersSelectOptions.length == 0"
+      >
+        <option value="">Loading...</option>
+      </select>
+      <select
+        id="payment-loaner"
+        formControlName="loaner" autocomplete="off"
+        *ngIf="loanersSelectOptions.length > 0"
+      >
+        <option
+          *ngFor="let loaner of loanersSelectOptions"
+          [ngValue]="loaner.id"
+        >
+          {{ loaner.name }}
+        </option>
+      </select>
+      <br> <br>
+    </span>
+    <label for="payment-type">Payment Type: <span style="color: red">*</span></label>
+    <select id="payment-type" formControlName="paymentType" autocomplete="off">
+      <option
+        *ngFor="let paymentType of paymentSelectOptions"
+        [ngValue]="paymentType.value"
+      >
+        {{ paymentType.label }}
+      </option>
+    </select>
+    <br> <br>
+    <div *ngIf="errorMessage">
+      <b>Error: </b>
+      <span style="color: red">
+        {{ errorMessage }}
+      </span>
+      <br>
+    </div>
+    <button (click)="onAddOrEditPayment()">{{ !paymentId ? 'Add' : 'Edit' }} Payment</button>
+    |
+    <button (click)="goBackToPaymentsList()">Cancel</button>
+  </form>
+</div>
+<div *ngIf="isReady && processSuccess">
+  The payment has been successfully {{ !paymentId ? 'added' : 'edited'}}. <br>
+  <button (click)="goBackToPaymentsList()">OK</button>
+</div>
