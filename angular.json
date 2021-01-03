@@ -121,6 +121,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "loan-frontend"
+    }
+  },
+  "defaultProject": "loan-frontend",
+  "cli": {
+    "analytics": "79efdc87-a7a9-4741-8f29-44cf76cbac81"
+  }
 }
