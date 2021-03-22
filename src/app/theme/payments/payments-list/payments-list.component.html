@@ -89,13 +89,13 @@
     *ngIf="searchParams.paymentType.value === paymentTypes.ALL ||
     searchParams.paymentType.value === paymentTypes.RECEIVED"
   >
-    <b>Total Payable Amount: </b> Rs. {{ totalPayable || 0 }}
+    <b>Total Payable Amount: </b> Rs. {{ totalPayable || 0 | number }}
   </span>
   <span
     *ngIf="searchParams.paymentType.value === paymentTypes.ALL ||
     searchParams.paymentType.value === paymentTypes.PAID"
   >
-    <b>Total Paid Amount: </b> Rs. {{ totalPaid || 0 }}
+    <b>Total Paid Amount: </b> Rs. {{ totalPaid || 0 | number }}
   </span>
   <br> <br>
   <table>
@@ -111,13 +111,13 @@
       <td> {{ i + 1 }} </td>
       <td *ngIf="!directVisitor"> {{ payment.loaner.name }} </td>
       <td> {{ payment.paymentDate | date }} </td>
-      <td> {{ payment.paymentAmount }} </td>
+      <td> {{ payment.paymentAmount | number }} </td>
       <td> {{ payment.paymentType === paymentTypes.PAID ? 'Paid' : 'Received' }} </td>
       <td>
         <button style="margin-left: 5px" (click)="onAddOrEditPayment(payment.id)">Edit</button>
         <button style="margin-left: 5px" (click)="onDeletePayment(payment.id)">Delete</button>
         <button style="margin-left: 5px" (click)="pinPaymentToDashboard(payment.id)">
-          {{ payment.isPinned ? 'Unpin from': 'Pin to' }} Dashboard
+          {{ payment.isPinned ? 'Unpin from' : 'Pin to' }} Dashboard
         </button>
       </td>
     </tr>
