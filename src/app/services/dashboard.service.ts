@@ -31,8 +31,8 @@ export class DashboardService {
             }
           );
           return {
-            totalPaid: response.received || 0,
-            totalPayable: response.paid || 0,
+            totalPaid: response.paid || 0,
+            totalPayable: response.received || 0,
             paymentsDifference: response.payments_difference,
             pinnedPayments
           };
