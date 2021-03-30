@@ -3,7 +3,7 @@ import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {Injectable} from '@angular/core';
-import {AuthService} from './auth.service';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class GeneralHttpInterceptorService implements HttpInterceptor {
@@ -13,7 +13,7 @@ export class GeneralHttpInterceptorService implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const endPointDomain = 'http://localhost:8000';
+    const endPointDomain = environment.apiEndPoint;
     const newProperties: {
       url: string;
       setHeaders?: any
